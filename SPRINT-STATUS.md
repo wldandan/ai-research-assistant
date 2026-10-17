@@ -1,4 +1,4 @@
-# 从零构建 AI 资料研究助理：进度
+# 用 Python 和 LangGraph 做一个有据可查的资料研究助理：进度
 
 2026-10-17。独立免费项目课，真实模型自主工具循环为主线。
 
@@ -13,3 +13,5 @@
 当前Sprint：docs/sprints/sprint-03.md。早期Mini状态与证据仅作历史记录，不能当作独立运行或provider成功。
 
 当前代码五个实现文件行覆盖82%。独立验收不代表provider实测或整课制作完成。证据：evidence/independence.md、independent-replay.json、review-independence.md。
+
+名称修订：按用户要求恢复为《用 Python 和 LangGraph 做一个有据可查的资料研究助理》。独立目录、运行方式和两课关系不变；历史Sprint及验证记录保留当时名称。
