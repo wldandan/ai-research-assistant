@@ -1,0 +1,42 @@
+[
+  {
+    "file": "lesson-01-visual-track.mp4",
+    "duration_seconds": 1080.0,
+    "width": 1920,
+    "height": 1080,
+    "fps": "5/1",
+    "audio_tracks": 0
+  },
+  {
+    "file": "clips/01-normal.mp4",
+    "duration_seconds": 29.08,
+    "width": 1920,
+    "height": 1080,
+    "fps": "25/1",
+    "audio_tracks": 0
+  },
+  {
+    "file": "clips/02-no-evidence.mp4",
+    "duration_seconds": 28.96,
+    "width": 1920,
+    "height": 1080,
+    "fps": "25/1",
+    "audio_tracks": 0
+  },
+  {
+    "file": "clips/03-changed-question.mp4",
+    "duration_seconds": 28.96,
+    "width": 1920,
+    "height": 1080,
+    "fps": "25/1",
+    "audio_tracks": 0
+  },
+  {
+    "file": "clips/04-real-failure.mp4",
+    "duration_seconds": 28.92,
+    "width": 1920,
+    "height": 1080,
+    "fps": "25/1",
+    "audio_tracks": 0
+  }
+]

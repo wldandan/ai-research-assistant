@@ -1,0 +1,13 @@
+{
+  "scenes": 6,
+  "states": 24,
+  "answer_reset": true,
+  "keyboard_navigation": true,
+  "network_requests": [],
+  "console_errors": [],
+  "viewports": [
+    "1920x1080",
+    "1280x720",
+    "390x844"
+  ]
+}

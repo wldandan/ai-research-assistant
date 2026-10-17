@@ -1,0 +1,14 @@
+{
+  "recorded_at_utc": "2026-10-17T03:27:44.578616+00:00",
+  "model": "MiniMax-M3",
+  "revision": "d4548089eb2aa1c39d2a53037b05023886d296a0",
+  "requested_budget": {
+    "max_model_turns": 4,
+    "max_tool_calls": 3
+  },
+  "source_sha256": {
+    "evidence/minimax-live-2026-10-17-batch.json": "1b5caa1101d65e50953721a8c9b24d4949d9c435209dd4eb06f9b36926949415",
+    "evidence/minimax-live-2026-10-17-batch-initial.json": "548655b3f5bbbb0d0ade5c9a232357e1b5508906e562082817d44369dc81d318",
+    "data/notes.json": "e0312b900c8aa7b5749725eea8f80fa6fa4f2b0ec5b3b8c3078016b1af866e27"
+  }
+}

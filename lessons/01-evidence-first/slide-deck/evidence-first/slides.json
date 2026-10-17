@@ -1,0 +1,171 @@
+[
+  {
+    "number": 1,
+    "slug": "cover",
+    "title": "怎样判断 Agent 的回答有依据？",
+    "subtitle": "用 Python 和 LangGraph 做一个有据可查的资料研究助理",
+    "body": [
+      "第一节 · 18分钟"
+    ],
+    "visual": "A striking cover with one large blue outlined evidence document icon on the right connected by a thin line to a smaller speech bubble with a bracket-source icon. Main title left across two lines, subtitle smaller beneath. Tiny label only: 第一节 · 18分钟. No people, no robot mascots.",
+    "timing": "00:00–01:20",
+    "prompt": "prompts/01-slide-cover.md",
+    "image": "01-slide-cover.png"
+  },
+  {
+    "number": 2,
+    "slug": "notes",
+    "title": "资料库只有两条笔记",
+    "subtitle": "编号用来定位，正文才是依据",
+    "body": [
+      "N01 · Agent loop",
+      "模型决定动作 → 执行工具 → 观察回传 → 继续或停止",
+      "最大轮次限制防止无界循环",
+      "N02 · 会话记忆",
+      "保存此前对话；保留系统目标及近期有效资料",
+      "不同会话应隔离"
+    ],
+    "visual": "Two equal spacious note sheets side by side, headed N01 and N02. Left sheet has blue circular-loop schematic and exact content shown below; right sheet stacked message shapes and its exact content. Do not draw bidirectional arrows between the two notes.",
+    "timing": "01:20–03:10",
+    "prompt": "prompts/02-slide-notes.md",
+    "image": "02-slide-notes.png"
+  },
+  {
+    "number": 3,
+    "slug": "replay",
+    "title": "先看真实记录，再讨论实现",
+    "subtitle": "2026-10-17 · 真实API历史记录回放",
+    "body": [
+      "最多 4 轮模型",
+      "最多 3 次工具调用",
+      "本次模型：MiniMax-M3",
+      "模型由配置选择",
+      "调用上限不是精确费用上限"
+    ],
+    "visual": "Three horizontally aligned columns like a restrained technical fact sheet. Main emphasis: 4 and 3 large numeral limits, and model configuration. MiniMax-M3 appears only in the third column as recorded condition, not in title. Clear thin dividers. Bottom one caution phrase.",
+    "timing": "03:10–04:20",
+    "prompt": "prompts/03-slide-replay.md",
+    "image": "03-slide-replay.png"
+  },
+  {
+    "number": 4,
+    "slug": "loop",
+    "title": "谁决定去查资料？",
+    "subtitle": "模型选择动作，程序执行受限工具",
+    "body": [
+      "model",
+      "选择检索词",
+      "工具参数",
+      "tools",
+      "Python检索",
+      "实际结果",
+      "model",
+      "读取结果再回答",
+      "N01"
+    ],
+    "visual": "Clean left to right three-node technical flow: first box model with caption 选择检索词, second box tools with caption Python检索, third box model with caption 读取结果再回答. Arrow first to second labeled 工具参数; arrow second to third labeled 实际结果. Under it a compact source document N01 connected to tools only, not directly to answer. Make all arrows unambiguous.",
+    "timing": "04:20–08:00",
+    "prompt": "prompts/04-slide-loop.md",
+    "image": "04-slide-loop.png"
+  },
+  {
+    "number": 5,
+    "slug": "normal",
+    "title": "正常查询：回查 N01 原文",
+    "subtitle": "请根据课程资料解释 Agent loop",
+    "body": [
+      "实际检索：Agent loop → N01",
+      "原文：模型决定动作，执行工具，把观察结果交回模型，再决定继续或停止。最大轮次限制防止无界循环。",
+      "核对：循环步骤与轮次限制均有依据",
+      "2轮模型 · 1次工具 · report"
+    ],
+    "visual": "Two vertically aligned reading panels. Left labelled 实际检索: exact keyword and source text. Right labelled 人工核对: exact supported ideas, no extra claims. Small metadata at bottom of the body in one line. Use blue ruled line to visually connect source and supported summary.",
+    "timing": "04:20–08:00",
+    "prompt": "prompts/05-slide-normal-v2.md",
+    "image": "05-slide-normal.png"
+  },
+  {
+    "number": 6,
+    "slug": "insufficient",
+    "title": "没有资料：承认不足也是合格结果",
+    "subtitle": "XYZ星系的问题，没有对应的课程笔记",
+    "body": [
+      "检索：XYZ galaxy astronomy",
+      "工具返回：[]",
+      "资料不足：当前课程资料没有匹配内容。",
+      "2轮模型 · 1次工具 · insufficient",
+      "当前资料无匹配 ≠ 世界上没有答案"
+    ],
+    "visual": "Simple technical path left to right: search query → empty list [] → a restrained amber result card. Emphasize exact short insufficient answer as central. Keep caution about no matches vs universal truth on bottom body line, no invented astronomy picture.",
+    "timing": "08:00–10:30",
+    "prompt": "prompts/06-slide-insufficient.md",
+    "image": "06-slide-insufficient.png"
+  },
+  {
+    "number": 7,
+    "slug": "batch",
+    "title": "同一轮，两个工具请求",
+    "subtitle": "模型提出一批请求，程序逐项执行并完整回填",
+    "body": [
+      "会话记忆 memory → N02",
+      "memory agent loop → N01 / N02",
+      "逐项执行",
+      "最终引用 N02",
+      "2轮模型 · 2次工具 · report",
+      "检索词、次数以实际记录为准"
+    ],
+    "visual": "Precise sequence schematic: model single box at top left sends two numbered tool-request strips inside one large tools group, strip1 会话记忆 memory → N02, strip2 memory agent loop → N01 / N02. Both results converge to model answer box labelled 最终引用 N02. Do not draw parallel lanes, processor concurrency symbols, or arrows implying parallel execution. Explicit caption 逐项执行. Include budget count bottom.",
+    "timing": "10:30–13:20",
+    "prompt": "prompts/07-slide-batch.md",
+    "image": "07-slide-batch.png"
+  },
+  {
+    "number": 8,
+    "slug": "counterexample",
+    "title": "真编号，也可能配上错误结论",
+    "subtitle": "手工构造的教学反例 · 不是模型真实输出",
+    "body": [
+      "原文 N01：最大轮次限制防止无界循环。",
+      "反例：[N01] Agent 能自动完成所有任务。",
+      "原文没有保证所有任务均能完成",
+      "编号检查还需要人工语义核对"
+    ],
+    "visual": "Split composition. Left blue source note with exact source text. Right amber outlined quote bubble with false sentence and large amber question mark. Underline unsupported words 所有任务 in amber. A bottom verdict explains the gap, clearly showing it is not supported. No celebratory check mark on the false sentence.",
+    "timing": "13:20–15:20",
+    "prompt": "prompts/08-slide-counterexample.md",
+    "image": "08-slide-counterexample.png"
+  },
+  {
+    "number": 9,
+    "slug": "failure",
+    "title": "真实失败必须保留",
+    "subtitle": "首次批次验证：空结果后仍出现假引用",
+    "body": [
+      "实际证据为空：[]",
+      "回答却引用：[N01]",
+      "failed",
+      "本次失败已保留；最终记录另存",
+      "单次通过不代表次次可靠"
+    ],
+    "visual": "Restrained evidence audit diagram: left card actual [] with label 实际证据为空, right card quoted small [N01] with label 回答却引用N01, clear amber cross and failed status beneath. No fake log screenshot, no made-up full answer. Bottom text: 本次失败已保留；最终记录另存. Do not imply reliability rate.",
+    "timing": "13:20–15:20",
+    "prompt": "prompts/09-slide-failure.md",
+    "image": "09-slide-failure.png"
+  },
+  {
+    "number": 10,
+    "slug": "self-check",
+    "title": "用三行答案，检查一次回答",
+    "subtitle": "先自己判断，再回到记录核对",
+    "body": [
+      "① 模型选择了哪些检索词？",
+      "② N02在哪里实际返回过？",
+      "③ 哪句原文支持“不同会话应隔离”？",
+      "下一节：search_notes 接收什么，返回什么？"
+    ],
+    "visual": "Large clean educational checklist with three numbered questions in center-left, ample space and thin rule separators, a simple small source note icon on right. Bottom thin blue rule with next-lesson cue, no thanks or marketing.",
+    "timing": "15:20–18:00",
+    "prompt": "prompts/10-slide-self-check.md",
+    "image": "10-slide-self-check.png"
+  }
+]

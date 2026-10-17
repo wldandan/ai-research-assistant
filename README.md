@@ -20,7 +20,7 @@
 ## 课程与文件入口
 
 - [详细大纲](OUTLINE.md)：唯一内容事实源，七节共80分钟规划。
-- [第一节18分钟试讲稿](lessons/01-evidence-first/SCRIPT.md)与[不出镜录屏清单](lessons/01-evidence-first/RECORDING-CHECKLIST.md)：三场景导览，尚未录制，试学后调整全课节奏。
+- [第一节18分钟试讲稿](lessons/01-evidence-first/SCRIPT.md)、[不出镜录屏清单](lessons/01-evidence-first/RECORDING-CHECKLIST.md)与[课件/录屏素材入口](lessons/01-evidence-first/materials/README.md)：已提供10页PPTX/PDF、离线真实回放、四段无声演示与18分钟画面底片；待配音、字幕和试学。
 - [课程简介](COURSE-BRIEF.md)、[学习成果](LEARNING-OUTCOMES.md)、[章节导航](SYLLABUS.md)、[验收要求](ASSESSMENT.md)。
 - `demo.py`：命令行及可重复离线图；`live_agent.py`：真实模型自主工具循环。
 - `research.py`、`data/notes.json`：本课自有检索、校验、摘录及两条受控教学笔记。
