@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import re
 from typing import TypedDict
 
 from demo import check_citations, search_notes, tracing_context
@@ -30,8 +31,10 @@ class AgentState(TypedDict):
     error: str
 
 
-def run_live(query: str, *, model: str, client) -> dict:
+def run_live(query: str, *, model: str, client, protocol: str = "responses") -> dict:
     """Run with an explicit client; tests use fixtures, CLI constructs a real client."""
+    if protocol not in {'responses', 'chat'}:
+        raise ValueError('Unsupported model protocol')
     validate_search_args({'query':query})
     if not model.strip():
         raise ValueError('RESEARCH_MODEL must be configured')
@@ -40,15 +43,33 @@ def run_live(query: str, *, model: str, client) -> dict:
         turns = state['model_turns'] + 1
         nodes = state['nodes'] + ['model']
         try:
-            response = client.responses.create(model=model, instructions=INSTRUCTIONS,
-                input=state['messages'], tools=[TOOL], tool_choice='auto',
-                parallel_tool_calls=False, max_output_tokens=600, store=False)
-            if response.status != 'completed':
-                return {'nodes':nodes, 'model_turns':turns, 'status':'error',
-                        'error':f'Model response not completed ({response.status})'}
-            output = [item if isinstance(item, dict) else item.model_dump(mode='json')
-                      for item in response.output]
-            pending = [item for item in output if item['type'] == 'function_call']
+            if protocol == 'chat':
+                response = client.chat.completions.create(model=model, messages=state['messages'],
+                    tools=[{'type':'function', 'function':{key:TOOL[key] for key in ('name','description','parameters')}}],
+                    tool_choice='auto', max_tokens=4096, temperature=1)
+                choice = response.choices[0]
+                if choice.finish_reason not in {'stop','tool_calls'}:
+                    return {'nodes':nodes, 'model_turns':turns, 'status':'error',
+                            'error':f'Model response not completed ({choice.finish_reason})'}
+                # Keep ALL assistant fields, including reasoning, for protocol continuation.
+                message = choice.message.model_dump(exclude_none=True)
+                output = [message]
+                pending = [{'name':item['function']['name'], 'arguments':item['function']['arguments'],
+                            'call_id':item['id']} for item in message.get('tool_calls') or []]
+                answer = re.sub(r'<think>.*?</think>', '', message.get('content') or '', flags=re.S|re.I).strip()
+                if '<think' in answer.lower():
+                    answer = ''  # Never publish an unterminated reasoning block.
+            else:
+                response = client.responses.create(model=model, instructions=INSTRUCTIONS,
+                    input=state['messages'], tools=[TOOL], tool_choice='auto',
+                    parallel_tool_calls=False, max_output_tokens=600, store=False)
+                if response.status != 'completed':
+                    return {'nodes':nodes, 'model_turns':turns, 'status':'error',
+                            'error':f'Model response not completed ({response.status})'}
+                output = [item if isinstance(item, dict) else item.model_dump(mode='json')
+                          for item in response.output]
+                pending = [item for item in output if item['type'] == 'function_call']
+                answer = response.output_text
             update = {'messages': state['messages'] + output, 'pending': pending,
                       'nodes': nodes, 'model_turns': turns}
             if pending:
@@ -57,7 +78,6 @@ def run_live(query: str, *, model: str, client) -> dict:
                 if len(pending) != 1:
                     return {**update, 'status':'error', 'error':'One tool call per turn is allowed'}
                 return update
-            answer = response.output_text
             valid = bool(state['tools']) and (check_citations(answer,state['evidence'])
                     if state['evidence'] else '资料不足' in answer and '[' not in answer)
             return {**update, 'answer':answer, 'status':
@@ -74,11 +94,14 @@ def run_live(query: str, *, model: str, client) -> dict:
             args = validate_search_args(json.loads(item['arguments']))
             rows = search_notes(args['query'], limit=args['limit'])
             evidence = {row['id']:row for row in state['evidence'] + rows}
-            return {'messages':state['messages'] + [{'type':'function_call_output',
-                     'call_id':item['call_id'], 'output':json.dumps(rows,ensure_ascii=False)}],
+            tool_result = ({'role':'tool', 'tool_call_id':item['call_id'],
+                            'content':json.dumps(rows,ensure_ascii=False)} if protocol == 'chat' else
+                           {'type':'function_call_output', 'call_id':item['call_id'],
+                            'output':json.dumps(rows,ensure_ascii=False)})
+            return {'messages':state['messages'] + [tool_result],
                     'evidence':list(evidence.values()), 'pending':[],
                     'tools':state['tools'] + [{'name':item['name'], 'call_id':item['call_id'], 'arguments':args,
-                               'output_type':'function_call_output', 'output':rows,
+                               'output_type':'tool' if protocol == 'chat' else 'function_call_output', 'output':rows,
                                'source_ids':[r['id'] for r in rows]}],
                     'nodes':state['nodes'] + ['tools']}
         except (ValueError, TypeError, KeyError) as error:
@@ -94,7 +117,7 @@ def run_live(query: str, *, model: str, client) -> dict:
     graph.add_conditional_edges('tools', lambda s: END if s['status'] else 'model',
                                 {END:END, 'model':'model'})
     with tracing_context(enabled=False):
-        result = graph.compile().invoke({'messages':[{'role':'user','content':query}],
+        result = graph.compile().invoke({'messages':([{'role':'system','content':INSTRUCTIONS}] if protocol == 'chat' else []) + [{'role':'user','content':query}],
                  'pending':[], 'answer':'', 'evidence':[], 'tools':[], 'nodes':[],
                  'model_turns':0, 'status':'', 'error':''},
                  config={'recursion_limit':12, 'callbacks':[]})

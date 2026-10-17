@@ -15,3 +15,7 @@
 当前代码五个实现文件行覆盖82%。独立验收不代表provider实测或整课制作完成。证据：evidence/independence.md、independent-replay.json、review-independence.md。
 
 名称修订：按用户要求恢复为《用 Python 和 LangGraph 做一个有据可查的资料研究助理》。独立目录、运行方式和两课关系不变；历史Sprint及验证记录保留当时名称。
+
+MiniMax接入：新增Chat Completions协议与独立MINIMAX_API_KEY配置，本地.env默认空Key且忽略Git。两种协议测试中，真实MiniMax三场景仍未执行。当前任务见docs/sprints/sprint-04.md。
+
+Sprint04完成接入与配置准备：28项测试通过，五个实现文件行覆盖93%，/rev与QA Retain。真实MiniMax Key待用户本地填写，三个provider场景未执行。

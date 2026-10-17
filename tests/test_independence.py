@@ -15,7 +15,7 @@ class IndependenceTests(unittest.TestCase):
     def test_only_this_course_runs_from_a_foreign_working_directory(self):
         with tempfile.TemporaryDirectory() as folder:
             isolated = Path(folder) / 'course'
-            shutil.copytree(ROOT, isolated, ignore=shutil.ignore_patterns('.venv', '.git', '__pycache__', '.coverage'))
+            shutil.copytree(ROOT, isolated, ignore=shutil.ignore_patterns('.venv', '.git', '__pycache__', '.coverage', '.env', '.env.*'))
             env = dict(os.environ, PYTHONPATH='', LANGSMITH_TRACING='false', LANGCHAIN_TRACING_V2='false')
             for query, status in [('agent loop','report'), ('不存在的天文星系XYZ','insufficient'), ('memory','report')]:
                 p = subprocess.run([sys.executable, '-E', str(isolated/'demo.py'), '--solution', 'reference', '--query', query],

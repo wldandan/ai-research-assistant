@@ -34,19 +34,43 @@
 uv sync --frozen --extra live
 ```
 
-### 真实模型主线
+### 真实模型主线：先用 MiniMax
 
-在本机安全配置 `OPENAI_API_KEY` 和 `RESEARCH_MODEL`；后者填账户实际可用、支持Responses function calling的模型名称。不要在代码、聊天或提交的学习记录中填写密钥。
+已接入MiniMax的OpenAI兼容 **Chat Completions**，它与原先OpenAI Responses是两种协议，不是只换地址。使用独立的MINIMAX_API_KEY，绝不会拿OPENAI_API_KEY作为后备发给MiniMax。其他供应商不在本轮适配范围。
+
+复制配置示例（本机已有.env时不要覆盖），只在本地填写Key：
 
 ```bash
-uv run --frozen --extra live python demo.py --live --query '请根据课程资料解释 Agent loop'
+cp .env.example .env
 ```
 
-缺配置退出1、状态configuration_required，不会静默回退离线模拟。模型自行产生工具调用与关键词；程序返回公开教学片段，模型再选择继续检索或回答。观察 `nodes/tools/evidence/answer/status`：tools含call_id、模型参数、function_call_output及实际返回资料。未检索、假引用或有证据无引用判failed；这是窄规则，不代表语义正确。
+`.env` 已被Git忽略，示例不含真实密钥；程序不自行读取.env，运行时由uv的`--env-file`显式加载。
 
-最多4轮模型、3次工具，每轮一个工具调用、最多输出600token、单请求30秒超时、零自动重试；预算耗尽明确结束，不伪造答案。未完成/截断的provider响应不判成功、不执行其中待处理工具。资源限制不是精确金额预算，请在供应商账户设置支出限制。只发公开教学问题与资料，不上传公司内部材料。关闭LangSmith跟踪，SDK请求store=False不等于供应商零保留承诺。
+```dotenv
+MINIMAX_API_KEY=在本机填写你的MiniMax密钥
+MINIMAX_BASE_URL=https://api.minimax.io/v1
+RESEARCH_MODEL=MiniMax-M2.5
+```
 
-**当前真实接口已用SDK＋本地HTTP fixture验证，尚无供应商实际运行记录。** 要完成整课验收，仍需正常、无资料、换问题三个实际live场景及人工回查。无凭证可以先做离线练习，但不算完成真实Agent验收。
+示例使用官方国际站地址和文档列出的M2.5，实际权限以你的账户为准。如果使用其他区域控制台，请填写对应的兼容地址和Key；不要混用区域。兼容地址只接受HTTPS，不接受带用户名密码、查询参数或fragment的URL。不要把密钥发到聊天或提交进Git。
+
+```bash
+uv run --frozen --extra live --env-file .env python demo.py --live --provider minimax --query '请根据课程资料解释 Agent loop'
+uv run --frozen --extra live --env-file .env python demo.py --live --provider minimax --query '资料中如何解释不存在的天文星系 XYZ？'
+uv run --frozen --extra live --env-file .env python demo.py --live --provider minimax --query '请根据课程资料解释会话记忆 memory'
+```
+
+依次核对实际工具调用、正常查询的N01、没有资料时的不足结论、换问题的N02。真实模型可能选错关键词或违反任务要求，不能把上述预期当作已成功；应保存失败并解释。
+
+观察nodes/tools/evidence/answer/status：tools含call_id、模型参数、role=tool的实际公开资料返回。完整assistant工具调用与思考上下文仅在内部续接，公开answer移除think段，不把推理文本写入回放。未检索、假引用或有证据无引用判failed；编号正确不代表语义支持。
+
+MiniMax最多4轮模型、3次工具，每轮仅允许一个工具调用；每次max_tokens=4096（含思考额度），单请求60秒，零自动重试。最多4×4096生成token的预算不是精确金额上限，输入token也可能重复计费；请在供应商账户设置支出限制。长度截断、不支持的finish_reason、多工具调用或耗尽轮数均明确失败，不伪造答案。
+
+原OpenAI Responses路径保留：使用OPENAI_API_KEY/RESEARCH_MODEL和`--provider openai`（默认），原限制每轮600输出token、30秒。两种协议的工具结果字段不同，不混用配置。
+
+**当前MiniMax与OpenAI都只有本地协议/SDK fixture验证，没有真实供应商三场景成功记录。** 未配置Key会明确退出，不回退模拟。只发送公开教学问题和笔记，不传入公司内部材料。关闭LangSmith跟踪，不承诺供应商零保留。
+
+官方接口依据：[MiniMax OpenAI SDK兼容文档](https://platform.minimax.io/docs/api-reference/text-openai-api)。本轮验证记录见[evidence/minimax-adapter.md](evidence/minimax-adapter.md)。
 
 ### 离线对照和路由练习（约15–20分钟）
 

@@ -5,6 +5,7 @@ import argparse
 import importlib
 import json
 import os
+from urllib.parse import urlsplit
 import re
 from typing import Callable, TypedDict
 
@@ -83,16 +84,27 @@ def main() -> int:
     parser.add_argument('--query', default='agent loop')
     parser.add_argument('--solution', choices=['starter', 'reference'], default='starter')
     parser.add_argument('--live', action='store_true', help='Explicitly call a real model; requires key and model, may incur API costs')
+    parser.add_argument('--provider', choices=['openai','minimax'], default='openai')
     args = parser.parse_args()
     if args.live:
-        if not os.environ.get('OPENAI_API_KEY') or not os.environ.get('RESEARCH_MODEL'):
-            print(json.dumps({'status':'configuration_required', 'error':'Configure OPENAI_API_KEY and RESEARCH_MODEL; no offline fallback'}))
+        key_name = 'MINIMAX_API_KEY' if args.provider == 'minimax' else 'OPENAI_API_KEY'
+        if not os.environ.get(key_name) or not os.environ.get('RESEARCH_MODEL'):
+            print(json.dumps({'status':'configuration_required', 'error':f'Configure {key_name} and RESEARCH_MODEL; no offline fallback'}))
             return 1
         from openai import OpenAI
         from live_agent import run_live
         try:
-            with OpenAI(timeout=30, max_retries=0) as client:
-                result = run_live(args.query, model=os.environ['RESEARCH_MODEL'], client=client)
+            options = {'timeout':30, 'max_retries':0}
+            if args.provider == 'minimax':
+                base_url = os.environ.get('MINIMAX_BASE_URL', 'https://api.minimax.io/v1')
+                address = urlsplit(base_url)
+                if address.scheme != 'https' or not address.hostname or address.username or address.password or address.query or address.fragment:
+                    raise ValueError('Invalid MiniMax base URL')
+                options.update(api_key=os.environ['MINIMAX_API_KEY'], base_url=base_url, timeout=60)
+            with OpenAI(**options) as client:
+                result = run_live(args.query, model=os.environ['RESEARCH_MODEL'], client=client,
+                                  protocol='chat' if args.provider == 'minimax' else 'responses')
+            result['provider'] = args.provider
             result['evidence_kind'] = 'external model execution'
         except ValueError:
             result = {'status':'error', 'error':'Invalid query or model configuration'}
