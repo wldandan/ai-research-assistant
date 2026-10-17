@@ -19,3 +19,7 @@
 MiniMax接入：新增Chat Completions协议与独立MINIMAX_API_KEY配置，本地.env默认空Key且忽略Git。两种协议测试中，真实MiniMax三场景仍未执行。当前任务见docs/sprints/sprint-04.md。
 
 Sprint04完成接入与配置准备：28项测试通过，五个实现文件行覆盖93%，/rev与QA Retain。真实MiniMax Key待用户本地填写，三个provider场景未执行。
+
+2026-10-17真实验证：MiniMax-M3已连通，首次三场景均因多工具拒绝；补单工具请求参数后无资料场景通过（3工具/4轮），正常和换问题检索N01/N02后仍多工具拒绝。保留全部真实失败证据，未标记三场景全部成功。28项本地回归通过。
+
+QA真实验收结论：1场景通过、2场景失败，发布Revise；不能把此前代码/fixture的Retain当作真实供应商通过。当前待办见docs/sprints/sprint-05.md。

@@ -1,0 +1,73 @@
+{
+  "recorded_at_utc": "2026-10-17T03:14:48.441015+00:00",
+  "model": "MiniMax-M3",
+  "provider": "minimax",
+  "base_url": "https://api.minimaxi.com/v1",
+  "credential_source": "CC Switch opencode/MiniMax; loaded in memory, not recorded",
+  "revision": "9176c826525c186f2dc636ea805b094142582dd1",
+  "source_sha256": {
+    "demo.py": "baa6d5fb9bb67afd4bc08a95c9440a2ba241cd7e03596cbf8a53eadbe19b8bc0",
+    "live_agent.py": "6928599603d00e125fe803e067f03d566f15c3ff95aa1ea3534b351cc63484ea",
+    "research.py": "91734e5fcd59aa7131702a614f1268772a7414d053f3ee32f149b0ad825701d2",
+    "data/notes.json": "e0312b900c8aa7b5749725eea8f80fa6fa4f2b0ec5b3b8c3078016b1af866e27"
+  },
+  "runs": [
+    {
+      "scenario": "normal",
+      "query": "请根据课程资料解释 Agent loop",
+      "exit_code": 1,
+      "elapsed_seconds": 4.14,
+      "result": {
+        "answer": "",
+        "evidence": [],
+        "tools": [],
+        "nodes": [
+          "model"
+        ],
+        "model_turns": 1,
+        "status": "error",
+        "error": "One tool call per turn is allowed",
+        "provider": "minimax",
+        "evidence_kind": "external model execution"
+      }
+    },
+    {
+      "scenario": "no-evidence",
+      "query": "资料中如何解释不存在的天文星系 XYZ？",
+      "exit_code": 1,
+      "elapsed_seconds": 3.88,
+      "result": {
+        "answer": "",
+        "evidence": [],
+        "tools": [],
+        "nodes": [
+          "model"
+        ],
+        "model_turns": 1,
+        "status": "error",
+        "error": "One tool call per turn is allowed",
+        "provider": "minimax",
+        "evidence_kind": "external model execution"
+      }
+    },
+    {
+      "scenario": "changed-question",
+      "query": "请根据课程资料解释会话记忆 memory",
+      "exit_code": 1,
+      "elapsed_seconds": 3.52,
+      "result": {
+        "answer": "",
+        "evidence": [],
+        "tools": [],
+        "nodes": [
+          "model"
+        ],
+        "model_turns": 1,
+        "status": "error",
+        "error": "One tool call per turn is allowed",
+        "provider": "minimax",
+        "evidence_kind": "external model execution"
+      }
+    }
+  ]
+}

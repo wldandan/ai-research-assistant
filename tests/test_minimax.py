@@ -47,6 +47,8 @@ class MiniMaxTests(unittest.TestCase):
             self.assertEqual(second['messages'][3]['tool_call_id'],'chat-tool-1')
             self.assertEqual(second['messages'][3]['role'],'tool')
             self.assertEqual(second['max_tokens'],4096)
+            self.assertIn('parallel_tool_calls',second)
+            self.assertFalse(second['parallel_tool_calls'])
             self.assertEqual(result['tools'][0]['output_type'],'tool')
 
     def test_length_and_parallel_tools_do_not_execute(self):

@@ -1,3 +1,5 @@
+> 后续真实验证已完成一轮：MiniMax-M3三场景仅无资料通过，另两项多工具拒绝。当前结果见minimax-live-2026-10-17.md；下方“未配置/未调用”为早期历史状态。
+
 # MiniMax接入状态
 
 2026-10-17。新增Chat Completions分支，原Responses分支保留；真实LangGraph循环不变。

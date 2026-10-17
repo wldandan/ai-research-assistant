@@ -1,0 +1,169 @@
+{
+  "recorded_at_utc": "2026-10-17T03:15:46.975844+00:00",
+  "model": "MiniMax-M3",
+  "provider": "minimax",
+  "base_url": "https://api.minimaxi.com/v1",
+  "credential_source": "CC Switch opencode/MiniMax; loaded in memory, not recorded",
+  "revision": "9176c826525c186f2dc636ea805b094142582dd1",
+  "source_sha256": {
+    "demo.py": "baa6d5fb9bb67afd4bc08a95c9440a2ba241cd7e03596cbf8a53eadbe19b8bc0",
+    "live_agent.py": "7b7024cca42e166a3af6f2d65fe7ce2ccf683e32743c44ace474a370bf0dec57",
+    "research.py": "91734e5fcd59aa7131702a614f1268772a7414d053f3ee32f149b0ad825701d2",
+    "data/notes.json": "e0312b900c8aa7b5749725eea8f80fa6fa4f2b0ec5b3b8c3078016b1af866e27"
+  },
+  "runs": [
+    {
+      "scenario": "normal",
+      "query": "请根据课程资料解释 Agent loop",
+      "exit_code": 1,
+      "elapsed_seconds": 5.23,
+      "result": {
+        "answer": "",
+        "evidence": [
+          {
+            "id": "N01",
+            "topic": "agent loop 工具 循环",
+            "text": "Agent loop 由模型决定动作，执行工具，把观察结果交回模型，再决定继续或停止。最大轮次限制防止无界循环。"
+          }
+        ],
+        "tools": [
+          {
+            "name": "search_notes",
+            "call_id": "call_01a147dbd79d7b228bdda584",
+            "arguments": {
+              "query": "agent loop",
+              "limit": 3
+            },
+            "output_type": "tool",
+            "output": [
+              {
+                "id": "N01",
+                "topic": "agent loop 工具 循环",
+                "text": "Agent loop 由模型决定动作，执行工具，把观察结果交回模型，再决定继续或停止。最大轮次限制防止无界循环。"
+              }
+            ],
+            "source_ids": [
+              "N01"
+            ]
+          }
+        ],
+        "nodes": [
+          "model",
+          "tools",
+          "model"
+        ],
+        "model_turns": 2,
+        "status": "error",
+        "error": "One tool call per turn is allowed",
+        "provider": "minimax",
+        "evidence_kind": "external model execution"
+      }
+    },
+    {
+      "scenario": "no-evidence",
+      "query": "资料中如何解释不存在的天文星系 XYZ？",
+      "exit_code": 0,
+      "elapsed_seconds": 11.35,
+      "result": {
+        "answer": "资料不足。\n\n经过三次检索（关键词：\"XYZ galaxy 星系 天文\"、\"XYZ 天文\"、\"galaxy 解释\"），课程笔记中均未返回任何匹配片段。因此，对于\"不存在的天文星系 XYZ\"的解释，**资料中没有任何相关内容可供引用**。\n\n如果该名称确实为虚构或指向某种比喻性概念，课程笔记也并未对其进行任何说明或讨论。建议确认名称拼写，或提供更多背景信息以便进一步检索。",
+        "evidence": [],
+        "tools": [
+          {
+            "name": "search_notes",
+            "call_id": "call_cjiewKhlytFdvPCcg87KwbeL",
+            "arguments": {
+              "query": "XYZ galaxy 星系 天文",
+              "limit": 3
+            },
+            "output_type": "tool",
+            "output": [],
+            "source_ids": []
+          },
+          {
+            "name": "search_notes",
+            "call_id": "call_FXuCVPqJh6ibfIVzgsG0Dn2f",
+            "arguments": {
+              "query": "XYZ 天文",
+              "limit": 3
+            },
+            "output_type": "tool",
+            "output": [],
+            "source_ids": []
+          },
+          {
+            "name": "search_notes",
+            "call_id": "call_2bhbt19ST1ufXgb9BoS822R3",
+            "arguments": {
+              "query": "galaxy galaxy 解释",
+              "limit": 3
+            },
+            "output_type": "tool",
+            "output": [],
+            "source_ids": []
+          }
+        ],
+        "nodes": [
+          "model",
+          "tools",
+          "model",
+          "tools",
+          "model",
+          "tools",
+          "model"
+        ],
+        "model_turns": 4,
+        "status": "insufficient",
+        "error": "",
+        "provider": "minimax",
+        "evidence_kind": "external model execution"
+      }
+    },
+    {
+      "scenario": "changed-question",
+      "query": "请根据课程资料解释会话记忆 memory",
+      "exit_code": 1,
+      "elapsed_seconds": 5.67,
+      "result": {
+        "answer": "",
+        "evidence": [
+          {
+            "id": "N02",
+            "topic": "memory context 上下文 记忆",
+            "text": "会话记忆保存此前对话；上下文预算有限，应保留系统目标及近期有效资料。不同会话应隔离。"
+          }
+        ],
+        "tools": [
+          {
+            "name": "search_notes",
+            "call_id": "call_zQYloe1sa4g3MJ3Dj66jOZzg",
+            "arguments": {
+              "query": "会话记忆 memory",
+              "limit": 3
+            },
+            "output_type": "tool",
+            "output": [
+              {
+                "id": "N02",
+                "topic": "memory context 上下文 记忆",
+                "text": "会话记忆保存此前对话；上下文预算有限，应保留系统目标及近期有效资料。不同会话应隔离。"
+              }
+            ],
+            "source_ids": [
+              "N02"
+            ]
+          }
+        ],
+        "nodes": [
+          "model",
+          "tools",
+          "model"
+        ],
+        "model_turns": 2,
+        "status": "error",
+        "error": "One tool call per turn is allowed",
+        "provider": "minimax",
+        "evidence_kind": "external model execution"
+      }
+    }
+  ]
+}

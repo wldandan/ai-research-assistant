@@ -68,7 +68,7 @@ MiniMax最多4轮模型、3次工具，每轮仅允许一个工具调用；每�
 
 原OpenAI Responses路径保留：使用OPENAI_API_KEY/RESEARCH_MODEL和`--provider openai`（默认），原限制每轮600输出token、30秒。两种协议的工具结果字段不同，不混用配置。
 
-**当前MiniMax与OpenAI都只有本地协议/SDK fixture验证，没有真实供应商三场景成功记录。** 未配置Key会明确退出，不回退模拟。只发送公开教学问题和笔记，不传入公司内部材料。关闭LangSmith跟踪，不承诺供应商零保留。
+**2026-10-17已实测MiniMax-M3：无资料场景通过；正常查询和换问题检索成功后因多工具调用被拦截，尚未全通过。** [真实记录与分析](evidence/minimax-live-2026-10-17.md)。OpenAI仍仅有本地fixture验证。 未配置Key会明确退出，不回退模拟。只发送公开教学问题和笔记，不传入公司内部材料。关闭LangSmith跟踪，不承诺供应商零保留。
 
 官方接口依据：[MiniMax OpenAI SDK兼容文档](https://platform.minimax.io/docs/api-reference/text-openai-api)。本轮验证记录见[evidence/minimax-adapter.md](evidence/minimax-adapter.md)。
 
