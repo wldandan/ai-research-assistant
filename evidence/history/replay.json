@@ -1,0 +1,158 @@
+{
+  "recorded_at_utc": "2026-10-17T02:25:10.835983+00:00",
+  "evidence_kind": "historical local execution of deterministic simulation; real LangGraph, no LLM",
+  "platform": "macOS-15.5-arm64-arm-64bit",
+  "python": "3.12.12",
+  "langgraph": "1.2.11",
+  "source_sha256": {
+    "free-course/demo.py": "0a3b7d0dd9bb84f904ab5576ad79fd90fd1aa1f1b5d2a67f5ca2a4fd85d979ce",
+    "free-course/starter.py": "73b965d7f6e9168ad2bbbf2bab7ee5681553f5aab0dca517d379dbad07ab79c3",
+    "free-course/reference.py": "5cfa04d51ea9c5b3855bfa1ced80fad5368308b6ae370250095e2fe4af520e85",
+    "workshops/3-day/src/agent_workshop/research.py": "28fec656e5ed2e5febac910c927162b1538e69f8626c98399ae6e95d2d7118f2",
+    "workshops/3-day/src/agent_workshop/data/notes.json": "03aa149c2174ea98bef83a27f67f5e7d628d3bcfcd89be9981ac41cbf67ac070"
+  },
+  "runs": [
+    {
+      "command": [
+        "/Users/leiw/Projects/tutorials/leiw/Courses/ai-agent-engineering-course/free-course/.venv/bin/python",
+        "/Users/leiw/Projects/tutorials/leiw/Courses/ai-agent-engineering-course/free-course/demo.py",
+        "--solution",
+        "starter",
+        "--query",
+        "不存在的天文星系XYZ"
+      ],
+      "cwd": "/tmp",
+      "exit_code": 1,
+      "output": {
+        "query": "不存在的天文星系XYZ",
+        "evidence": [],
+        "nodes": [
+          "search",
+          "report"
+        ],
+        "answer": "资料不足：当前资料库没有匹配证据，请补充资料或调整问题。",
+        "error": "",
+        "status": "report",
+        "evidence_kind": "deterministic simulation",
+        "checks_passed": false
+      },
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/leiw/Projects/tutorials/leiw/Courses/ai-agent-engineering-course/free-course/.venv/bin/python",
+        "/Users/leiw/Projects/tutorials/leiw/Courses/ai-agent-engineering-course/free-course/demo.py",
+        "--solution",
+        "reference",
+        "--query",
+        "agent loop"
+      ],
+      "cwd": "/tmp",
+      "exit_code": 0,
+      "output": {
+        "query": "agent loop",
+        "evidence": [
+          {
+            "id": "N01",
+            "topic": "agent loop 工具 循环",
+            "text": "Agent loop 由模型决定动作，执行工具，把观察结果交回模型，再决定继续或停止。最大轮次限制防止无界循环。"
+          }
+        ],
+        "nodes": [
+          "search",
+          "report"
+        ],
+        "answer": "[N01] Agent loop 由模型决定动作，执行工具，把观察结果交回模型，再决定继续或停止。最大轮次限制防止无界循环。",
+        "error": "",
+        "status": "report",
+        "evidence_kind": "deterministic simulation",
+        "checks_passed": true
+      },
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/leiw/Projects/tutorials/leiw/Courses/ai-agent-engineering-course/free-course/.venv/bin/python",
+        "/Users/leiw/Projects/tutorials/leiw/Courses/ai-agent-engineering-course/free-course/demo.py",
+        "--solution",
+        "reference",
+        "--query",
+        "不存在的天文星系XYZ"
+      ],
+      "cwd": "/tmp",
+      "exit_code": 0,
+      "output": {
+        "query": "不存在的天文星系XYZ",
+        "evidence": [],
+        "nodes": [
+          "search",
+          "insufficient"
+        ],
+        "answer": "资料不足：当前资料库没有匹配证据，请补充资料或调整问题。",
+        "error": "",
+        "status": "insufficient",
+        "evidence_kind": "deterministic simulation",
+        "checks_passed": true
+      },
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/leiw/Projects/tutorials/leiw/Courses/ai-agent-engineering-course/free-course/.venv/bin/python",
+        "/Users/leiw/Projects/tutorials/leiw/Courses/ai-agent-engineering-course/free-course/demo.py",
+        "--solution",
+        "reference",
+        "--query",
+        "memory"
+      ],
+      "cwd": "/tmp",
+      "exit_code": 0,
+      "output": {
+        "query": "memory",
+        "evidence": [
+          {
+            "id": "N02",
+            "topic": "memory context 上下文 记忆",
+            "text": "会话记忆保存此前对话；上下文预算有限，应保留系统目标及近期有效资料。不同会话应隔离。"
+          }
+        ],
+        "nodes": [
+          "search",
+          "report"
+        ],
+        "answer": "[N02] 会话记忆保存此前对话；上下文预算有限，应保留系统目标及近期有效资料。不同会话应隔离。",
+        "error": "",
+        "status": "report",
+        "evidence_kind": "deterministic simulation",
+        "checks_passed": true
+      },
+      "stderr": ""
+    },
+    {
+      "command": [
+        "/Users/leiw/Projects/tutorials/leiw/Courses/ai-agent-engineering-course/free-course/.venv/bin/python",
+        "/Users/leiw/Projects/tutorials/leiw/Courses/ai-agent-engineering-course/free-course/demo.py",
+        "--solution",
+        "reference",
+        "--query",
+        ""
+      ],
+      "cwd": "/tmp",
+      "exit_code": 1,
+      "output": {
+        "query": "",
+        "evidence": [],
+        "nodes": [
+          "search",
+          "error"
+        ],
+        "answer": "执行失败，请检查 error 字段。",
+        "error": "query must be 1..500 nonblank characters",
+        "status": "error",
+        "evidence_kind": "deterministic simulation",
+        "checks_passed": true
+      },
+      "stderr": ""
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+[project]
+name = "ai-research-assistant-course"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = ["langgraph==1.2.11"]
+
+[project.optional-dependencies]
+live = ["openai==3.14.0"]
+
+[tool.uv]
+package = false
