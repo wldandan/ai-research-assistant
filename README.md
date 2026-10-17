@@ -1,6 +1,6 @@
 # 用 Python 和 LangGraph 做一个有据可查的资料研究助理
 
-一门**独立、免费、不出镜**的项目实战课。面向会基础 Python 的开发者，用真实大模型、工具调用和 LangGraph，做出能查资料、给出处、如实呈现失败的研究助理。约80分钟录播设计，另计安装与暂停练习；视频与真实模型场景验收仍在制作。
+一门**独立、免费、不出镜**的项目实战课。面向会基础 Python 的开发者，用真实大模型、工具调用和 LangGraph，做出能查资料、给出处、如实呈现失败的研究助理。约80分钟录播设计，另计安装与暂停练习；三个真实模型场景已验收，视频仍在制作。
 
 课程免费，真实模型API可能收费；当前不收款、不预售或接赞助。
 
@@ -19,7 +19,8 @@
 
 ## 课程与文件入口
 
-- [详细大纲](OUTLINE.md)：唯一内容事实源，七节共80分钟。
+- [详细大纲](OUTLINE.md)：唯一内容事实源，七节共80分钟规划。
+- [第一节18分钟试讲稿](lessons/01-evidence-first/SCRIPT.md)与[不出镜录屏清单](lessons/01-evidence-first/RECORDING-CHECKLIST.md)：三场景导览，尚未录制，试学后调整全课节奏。
 - [课程简介](COURSE-BRIEF.md)、[学习成果](LEARNING-OUTCOMES.md)、[章节导航](SYLLABUS.md)、[验收要求](ASSESSMENT.md)。
 - `demo.py`：命令行及可重复离线图；`live_agent.py`：真实模型自主工具循环。
 - `research.py`、`data/notes.json`：本课自有检索、校验、摘录及两条受控教学笔记。
