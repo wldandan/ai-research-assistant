@@ -105,7 +105,7 @@ class LiveAgentTests(unittest.TestCase):
     def test_turn_cap_stops_before_executing_last_tool(self):
         api = self.api()
         client=Mock()
-        client.responses.create.return_value=response([call()])
+        client.responses.create.side_effect=[response([{**call(),'call_id':f'tool-{i}'}]) for i in range(4)]
         result=api.run_live('question',model='test-fixture',client=client)
         self.assertEqual(result['status'],'budget_exhausted')
         self.assertEqual(client.responses.create.call_count,4)

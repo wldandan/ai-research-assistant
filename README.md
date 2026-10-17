@@ -64,11 +64,11 @@ uv run --frozen --extra live --env-file .env python demo.py --live --provider mi
 
 观察nodes/tools/evidence/answer/status：tools含call_id、模型参数、role=tool的实际公开资料返回。完整assistant工具调用与思考上下文仅在内部续接，公开answer移除think段，不把推理文本写入回放。未检索、假引用或有证据无引用判failed；编号正确不代表语义支持。
 
-MiniMax最多4轮模型、3次工具，每轮仅允许一个工具调用；每次max_tokens=4096（含思考额度），单请求60秒，零自动重试。最多4×4096生成token的预算不是精确金额上限，输入token也可能重复计费；请在供应商账户设置支出限制。长度截断、不支持的finish_reason、多工具调用或耗尽轮数均明确失败，不伪造答案。
+默认最多4轮模型、3次工具调用（按调用数而非批次数计数），支持同轮多个工具请求，逐项执行并完整回填结果。执行前校验整批参数及唯一call_id，非法或超剩余预算则整批拒绝。可通过`--max-model-turns`与`--max-tool-calls`显式配置；模型由RESEARCH_MODEL选择，无型号特例。MiniMax每次max_tokens=4096（含思考额度），单请求60秒，零自动重试。最多4×4096生成token的预算不是精确金额上限，输入token也可能重复计费；请在供应商账户设置支出限制。长度截断、不支持的finish_reason、非法/超预算工具批次或耗尽轮数均明确失败，不伪造答案。
 
 原OpenAI Responses路径保留：使用OPENAI_API_KEY/RESEARCH_MODEL和`--provider openai`（默认），原限制每轮600输出token、30秒。两种协议的工具结果字段不同，不混用配置。
 
-**2026-10-17已实测MiniMax-M3：无资料场景通过；正常查询和换问题检索成功后因多工具调用被拦截，尚未全通过。** [真实记录与分析](evidence/minimax-live-2026-10-17.md)。OpenAI仍仅有本地fixture验证。 未配置Key会明确退出，不回退模拟。只发送公开教学问题和笔记，不传入公司内部材料。关闭LangSmith跟踪，不承诺供应商零保留。
+**2026-10-17在相同MiniMax-M3、相同三个问题及4轮/3工具预算下，三场景均通过；换问题场景同轮两个工具调用成功续接。** [最新真实记录与人工核对](evidence/minimax-live-2026-10-17-batch.md)。历史失败保留，代码不绑定该型号。OpenAI仍仅有本地fixture验证。 未配置Key会明确退出，不回退模拟。只发送公开教学问题和笔记，不传入公司内部材料。关闭LangSmith跟踪，不承诺供应商零保留。
 
 官方接口依据：[MiniMax OpenAI SDK兼容文档](https://platform.minimax.io/docs/api-reference/text-openai-api)。本轮验证记录见[evidence/minimax-adapter.md](evidence/minimax-adapter.md)。
 

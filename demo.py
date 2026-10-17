@@ -85,6 +85,8 @@ def main() -> int:
     parser.add_argument('--solution', choices=['starter', 'reference'], default='starter')
     parser.add_argument('--live', action='store_true', help='Explicitly call a real model; requires key and model, may incur API costs')
     parser.add_argument('--provider', choices=['openai','minimax'], default='openai')
+    parser.add_argument('--max-model-turns', type=int, default=4)
+    parser.add_argument('--max-tool-calls', type=int, default=3)
     args = parser.parse_args()
     if args.live:
         key_name = 'MINIMAX_API_KEY' if args.provider == 'minimax' else 'OPENAI_API_KEY'
@@ -103,7 +105,8 @@ def main() -> int:
                 options.update(api_key=os.environ['MINIMAX_API_KEY'], base_url=base_url, timeout=60)
             with OpenAI(**options) as client:
                 result = run_live(args.query, model=os.environ['RESEARCH_MODEL'], client=client,
-                                  protocol='chat' if args.provider == 'minimax' else 'responses')
+                                  protocol='chat' if args.provider == 'minimax' else 'responses',
+                                  max_model_turns=args.max_model_turns, max_tool_calls=args.max_tool_calls)
             result['provider'] = args.provider
             result['evidence_kind'] = 'external model execution'
         except ValueError:

@@ -48,22 +48,23 @@ class MiniMaxTests(unittest.TestCase):
             self.assertEqual(second['messages'][3]['role'],'tool')
             self.assertEqual(second['max_tokens'],4096)
             self.assertIn('parallel_tool_calls',second)
-            self.assertFalse(second['parallel_tool_calls'])
+            self.assertTrue(second['parallel_tool_calls'])
             self.assertEqual(result['tools'][0]['output_type'],'tool')
 
-    def test_length_and_parallel_tools_do_not_execute(self):
+    def test_length_and_oversized_batch_do_not_execute(self):
         api=self.api()
-        for response in [completion('[N01] partial',finish='length'),completion(calls=[tool(),tool('memory')])]:
+        for response, status in [(completion('[N01] partial',finish='length'),'error'),
+                                 (completion(calls=[{**tool(),'id':f'call-{i}'} for i in range(4)]),'budget_exhausted')]:
             client=Mock();client.chat.completions.create.return_value=response
             result=api.run_live('question',model='fixture',client=client,protocol='chat')
-            self.assertEqual(result['status'],'error')
+            self.assertEqual(result['status'],status)
             self.assertEqual(result['tools'],[])
 
     def test_ignored_tool_and_turn_limit_are_observable(self):
         api=self.api()
         client=Mock();client.chat.completions.create.return_value=completion('无需搜索。')
         self.assertEqual(api.run_live('question',model='fixture',client=client,protocol='chat')['status'],'failed')
-        client=Mock();client.chat.completions.create.return_value=completion(calls=[tool()])
+        client=Mock();client.chat.completions.create.side_effect=[completion(calls=[{**tool(),'id':f'call-{i}'}]) for i in range(4)]
         result=api.run_live('question',model='fixture',client=client,protocol='chat')
         self.assertEqual(result['status'],'budget_exhausted')
         self.assertEqual(client.chat.completions.create.call_count,4)

@@ -1,0 +1,200 @@
+{
+  "requested_budget": {
+    "max_model_turns": 4,
+    "max_tool_calls": 3
+  },
+  "baseline": "minimax-live-2026-10-17.json",
+  "recorded_at_utc": "2026-10-17T03:27:44.578616+00:00",
+  "model": "MiniMax-M3",
+  "provider": "minimax",
+  "base_url": "https://api.minimaxi.com/v1",
+  "credential_source": "CC Switch opencode/MiniMax; loaded in memory, not recorded",
+  "revision": "d4548089eb2aa1c39d2a53037b05023886d296a0",
+  "source_sha256": {
+    "demo.py": "3848f5d9aa3f89ef5e44f23091b0377b4063304b463972337b0bb35d185591cd",
+    "live_agent.py": "5fd29c920fe704f7cffe2dcc2268193449eabb433e4fc5c0758433884063df56",
+    "research.py": "91734e5fcd59aa7131702a614f1268772a7414d053f3ee32f149b0ad825701d2",
+    "data/notes.json": "e0312b900c8aa7b5749725eea8f80fa6fa4f2b0ec5b3b8c3078016b1af866e27"
+  },
+  "runs": [
+    {
+      "scenario": "normal",
+      "query": "请根据课程资料解释 Agent loop",
+      "exit_code": 0,
+      "elapsed_seconds": 4.58,
+      "result": {
+        "answer": "Agent loop 指模型决定动作→执行工具→把观察结果交回模型→再决定继续或停止的循环过程；并设有最大轮次限制以防止无界循环 [N01]。",
+        "evidence": [
+          {
+            "id": "N01",
+            "topic": "agent loop 工具 循环",
+            "text": "Agent loop 由模型决定动作，执行工具，把观察结果交回模型，再决定继续或停止。最大轮次限制防止无界循环。"
+          }
+        ],
+        "tools": [
+          {
+            "name": "search_notes",
+            "call_id": "call_DeupKHEFzVzQhqnb91yYNUKd",
+            "arguments": {
+              "query": "Agent loop",
+              "limit": 3
+            },
+            "output_type": "tool",
+            "status": "ok",
+            "output": [
+              {
+                "id": "N01",
+                "topic": "agent loop 工具 循环",
+                "text": "Agent loop 由模型决定动作，执行工具，把观察结果交回模型，再决定继续或停止。最大轮次限制防止无界循环。"
+              }
+            ],
+            "source_ids": [
+              "N01"
+            ]
+          }
+        ],
+        "nodes": [
+          "model",
+          "tools",
+          "model"
+        ],
+        "model_turns": 2,
+        "status": "report",
+        "error": "",
+        "budget": {
+          "max_model_turns": 4,
+          "max_tool_calls": 3,
+          "used_model_turns": 2,
+          "used_tool_calls": 1
+        },
+        "provider": "minimax",
+        "evidence_kind": "external model execution"
+      }
+    },
+    {
+      "scenario": "no-evidence",
+      "query": "资料中如何解释不存在的天文星系 XYZ？",
+      "exit_code": 0,
+      "elapsed_seconds": 4.86,
+      "result": {
+        "answer": "资料不足：当前课程资料没有匹配内容。",
+        "evidence": [],
+        "tools": [
+          {
+            "name": "search_notes",
+            "call_id": "call_01a147e6ddc47f838d39885b",
+            "arguments": {
+              "query": "XYZ galaxy astronomy",
+              "limit": 3
+            },
+            "output_type": "tool",
+            "status": "ok",
+            "output": [],
+            "source_ids": []
+          }
+        ],
+        "nodes": [
+          "model",
+          "tools",
+          "model"
+        ],
+        "model_turns": 2,
+        "status": "insufficient",
+        "error": "",
+        "budget": {
+          "max_model_turns": 4,
+          "max_tool_calls": 3,
+          "used_model_turns": 2,
+          "used_tool_calls": 1
+        },
+        "provider": "minimax",
+        "evidence_kind": "external model execution"
+      }
+    },
+    {
+      "scenario": "changed-question",
+      "query": "请根据课程资料解释会话记忆 memory",
+      "exit_code": 0,
+      "elapsed_seconds": 5.43,
+      "result": {
+        "answer": "会话记忆（memory）用于保存此前的对话内容；由于上下文预算有限，应保留系统目标和近期有效资料，并按会话隔离 [N02]。",
+        "evidence": [
+          {
+            "id": "N02",
+            "topic": "memory context 上下文 记忆",
+            "text": "会话记忆保存此前对话；上下文预算有限，应保留系统目标及近期有效资料。不同会话应隔离。"
+          },
+          {
+            "id": "N01",
+            "topic": "agent loop 工具 循环",
+            "text": "Agent loop 由模型决定动作，执行工具，把观察结果交回模型，再决定继续或停止。最大轮次限制防止无界循环。"
+          }
+        ],
+        "tools": [
+          {
+            "name": "search_notes",
+            "call_id": "call_Bcnc8BYoxqWZPEkY7AYkgxN9",
+            "arguments": {
+              "query": "会话记忆 memory",
+              "limit": 3
+            },
+            "output_type": "tool",
+            "status": "ok",
+            "output": [
+              {
+                "id": "N02",
+                "topic": "memory context 上下文 记忆",
+                "text": "会话记忆保存此前对话；上下文预算有限，应保留系统目标及近期有效资料。不同会话应隔离。"
+              }
+            ],
+            "source_ids": [
+              "N02"
+            ]
+          },
+          {
+            "name": "search_notes",
+            "call_id": "call_wP6qdfmes69clENAJKbIOdsK",
+            "arguments": {
+              "query": "memory agent loop",
+              "limit": 3
+            },
+            "output_type": "tool",
+            "status": "ok",
+            "output": [
+              {
+                "id": "N01",
+                "topic": "agent loop 工具 循环",
+                "text": "Agent loop 由模型决定动作，执行工具，把观察结果交回模型，再决定继续或停止。最大轮次限制防止无界循环。"
+              },
+              {
+                "id": "N02",
+                "topic": "memory context 上下文 记忆",
+                "text": "会话记忆保存此前对话；上下文预算有限，应保留系统目标及近期有效资料。不同会话应隔离。"
+              }
+            ],
+            "source_ids": [
+              "N01",
+              "N02"
+            ]
+          }
+        ],
+        "nodes": [
+          "model",
+          "tools",
+          "model"
+        ],
+        "model_turns": 2,
+        "status": "report",
+        "error": "",
+        "budget": {
+          "max_model_turns": 4,
+          "max_tool_calls": 3,
+          "used_model_turns": 2,
+          "used_tool_calls": 2
+        },
+        "provider": "minimax",
+        "evidence_kind": "external model execution"
+      }
+    }
+  ]
+}

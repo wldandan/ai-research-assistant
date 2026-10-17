@@ -1,3 +1,5 @@
+> 历史记录：后续通用批次修复及三场景通过见[最新报告](minimax-live-2026-10-17-batch.md)。本页保留当时失败。
+
 # MiniMax-M3 真实场景验证
 
 2026-10-17。已使用用户指定的CC Switch `opencode/MiniMax`配置，模型MiniMax-M3，官方区域接口https://api.minimaxi.com/v1。凭据在内存中读取并传给子进程，不记录Key，不修改CC Switch。
