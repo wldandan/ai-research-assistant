@@ -1,5 +1,5 @@
 [project]
-name = "ai-research-assistant-course"
+name = "ai-research-assistant"
 version = "0.1.0"
 requires-python = ">=3.11"
 dependencies = ["langgraph==1.2.11"]

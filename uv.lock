@@ -7,7 +7,7 @@ resolution-markers = [
 ]
 
 [[package]]
-name = "ai-research-assistant-course"
+name = "ai-research-assistant"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

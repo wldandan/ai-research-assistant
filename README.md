@@ -1,6 +1,6 @@
-# 用 Python 和 LangGraph 做一个有据可查的资料研究助理
+# AI Research Assistant：Agent工程免费入门项目
 
-一门**独立、免费、不出镜**的项目实战课。面向会基础 Python 的开发者，用真实大模型、工具调用和 LangGraph，做出能查资料、给出处、如实呈现失败的研究助理。约80分钟录播设计，另计安装与暂停练习；三个真实模型场景已验收，视频仍在制作。
+一个**独立、免费、不出镜**的Agent工程入门项目。面向会基础Python的开发者，通过约80分钟引导内容，用真实大模型、工具调用和LangGraph做出能查资料、给出处、如实呈现失败的研究助理。它采用短课式教学设计，但在产品体系中定位为Starter Project，不是Build、Run、Assure、Optimize之外的第五门核心Course。另计安装与暂停练习；三个真实模型场景已验收，视频仍在制作。
 
 课程免费，真实模型API可能收费；当前不收款、不预售或接赞助。
 
@@ -31,7 +31,7 @@
 需要Python3.11+与uv；本轮验证macOS arm64、Python3.12.12。下载或复制整个本课目录后，进入含 `pyproject.toml` 的目录；无需完整Courses工作区或另一门课程。首次安装需联网下载依赖，运行时从本文件位置读取资料，不依赖终端当前目录。
 
 ```bash
-# 进入下载后的 ai-research-assistant-course 目录
+# 进入下载后的 ai-research-assistant 目录
 uv sync --frozen --extra live
 ```
 

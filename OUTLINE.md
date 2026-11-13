@@ -1,6 +1,6 @@
-# 用 Python 和 LangGraph 做一个有据可查的资料研究助理
+# AI Research Assistant：Agent工程免费入门项目
 
-版本 v0.4｜2026-10-17。独立免费项目课，目录 `Courses/ai-research-assistant-course/`。与《AI Agent 关键技术与实践》是两门独立课程，各自完整、各自版本；受众可从本课进入专业课，也可独立选择。中文、不出镜；在职期间不盈利。课程主线必须有真实模型自主发起工具调用，离线图用于理解、练习和排错。
+版本 v0.4｜2026-10-17。独立免费入门项目，目录 `Courses/ecosystem/starter-projects/ai-research-assistant/`。它与《AI Agent关键技术与实践》各自完整、各自版本；受众可从本项目进入专业课，也可独立选择。中文、不出镜；在职期间不盈利。项目主线必须有真实模型自主发起工具调用，离线图用于理解、练习和排错。
 
 ## 课程总问题与学习成果
 
