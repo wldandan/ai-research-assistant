@@ -6,16 +6,16 @@
 
 ## 与《AI Agent 关键技术与实践》的关系
 
-这是两门课程，不是“大课的Mini目录”或必须连续购买的上下篇：
+这是两个可以独立进入的学习产品，不是“大课的 Mini 目录”或必须连续购买的上下篇：
 
-| | 本课 | AI Agent 关键技术与实践 |
+| | 本项目 | AI Agent 关键技术与实践 |
 |---|---|---|
 | 目标 | 完成一个小型真实Agent项目 | 系统学习Agent关键技术与工程实践 |
 | 范围 | 受控资料检索、模型选择工具、循环、引用与失败核对 | 工具、上下文、记忆、多Agent、MCP、安全、评测与恢复等 |
 | 先修关系 | 不要求先学或安装另一门课 | 也不要求先学本课 |
 | 代码与版本 | 本目录自带完整最小代码、语料、锁文件 | 独立维护自己的代码和交付 |
 
-两者可以相互推荐学习，不存在运行依赖。原检索/校验/摘录函数经授权抽取改编，来源见 [SOURCE-PROVENANCE](docs/SOURCE-PROVENANCE.md)；后续各自维护，不自动同步，不要求原仓库存在。大课入口：[AI Agent关键技术与实践](https://github.com/wldandan/ai-agent-engineering-course)。本课尚未创建远端仓库。
+两者可以相互推荐学习，不存在运行依赖。原检索/校验/摘录函数经授权抽取改编，来源见 [SOURCE-PROVENANCE](docs/SOURCE-PROVENANCE.md)；后续各自维护，不自动同步。项目仓库：[AI Research Assistant](https://github.com/wldandan/ai-research-assistant)；大课入口：[AI Agent关键技术与实践](https://github.com/wldandan/ai-agent-engineering-course)。
 
 ## 课程与文件入口
 
